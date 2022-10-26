@@ -1,4 +1,4 @@
-# AlgorithmicBias_Delirium_ML4H22022
+# AlgorithmicBias_Delirium_ML4H2022
 Code for ML4H'22 submission
 
 This repository contains the code used in the project investigating algorithmic bias in delirium predicting machine learning models.
