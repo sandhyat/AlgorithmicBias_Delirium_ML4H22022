@@ -9,7 +9,7 @@ For the MIMIC III dataset, the extraction steps were followed from the supplemen
 
 The psql queries for MIMICIII extraction can be found in MIMIC3-delirium_extraction.txt file.
 
-For processing the datasets, partitioning into train-test and training the RF (others models were also tried), we used the file Delirium_model_fairness_testing.py and Delirium_model_fairness_testing_MIMIC.py for EHR_Prop (Epic) and MIMIC-III respectively.
+For processing the datasets, partitioning into train-test and training the RF (others models were also tried), we used the file Delirium_model_fairness_testing.py and Delirium_model_fairness_testing_MIMIC.py for ACTFAST (Epic) and MIMIC-III respectively.
 
 For computing the groupwise performance as reported in the paper, we used Differential_perf_generator.py and Differential_per_generator_MIMIC.py. 
 
