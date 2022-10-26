@@ -1,0 +1,23 @@
+Mean_values,Std_values,method,sens_Var_level,x_ticks,x,sens_Var_level_crude
+0.7492,0.0281,Basic,Sex_0.0,Male,0.0,
+0.7657,0.0178,Basic,Sex_1.0,Female,1.0,
+0.723,0.0604,Basic,RACE_0,White,2.0,
+0.7909,0.0366,Basic,RACE_1,Black,3.0,
+0.7425,0.0288,Basic,age_0.0,"Age
+ [14 - 52)",4.0,
+0.7612,0.0265,Basic,age_1.0,"Age
+ [52 - 67)",5.0,
+0.7756,0.029,Basic,age_2.0,"Age
+ [67 - 102]",6.0,
+0.76,0.0321,PSM,Sex_0.0,Male,0.15,Sex_0.0
+0.8,0.0504,PSM,Sex_1.0,Female,1.15,Sex_1.0
+0.76,0.0341,PSM,RACE_0,White-PSM_B-W,2.15,RACE_0psm_BW
+0.79,0.036,PSM,RACE_1,Black-PSM_B-W,3.15,RACE_1psm_BW
+0.72,0.048,PSM,age_0.0,"Age
+ [14 - 52)-PSM_1-0",4.15,age_0.0psm10
+0.79,0.0423,PSM,age_1.0,"Age
+ [52 - 67)-PSM_1-0",5.15,age_1.0psm10
+0.75,0.0351,PSM1,age_1.0,"Age
+ [52 - 67)-PSM_1-2",5.15,age_1.0psm12
+0.8,0.0323,PSM1,age_2.0,"Age
+ [67 - 102]-PSM_1-2",6.15,age_2.0psm12

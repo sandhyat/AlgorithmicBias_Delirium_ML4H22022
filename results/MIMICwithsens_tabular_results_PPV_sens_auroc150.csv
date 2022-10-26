@@ -1,0 +1,12 @@
+Feature_level_inter,PPV_diff_from_avg,PPV_diff_from_avg_psm,Sensitivity_diff_from_avg,Sensitivity_diff_from_avg_psm,AUROC_diff_from_avg,AUROC_diff_from_avg_psm
+Patient group,Grp PPV - Avg PPV,Grp PPV - Avg PPV,Grp Sensitivity - Avg Sensitivity,Grp Sensitivity - Avg Sensitivity,Grp AUROC - Avg AUROC,Grp AUROC - Avg AUROC
+ , ,(After matching ^^), ,(After matching ^^), ,(After matching ^^)
+Male,0.02*,0.02*,0.02*,0.02*,0.01*,0.02*
+Female,-0.02*,-0.02*,-0.02*,-0.02*,-0.01*,-0.02*
+Black,-0.02*,"[0.0, '-0.04*']",0.0,"['0.04*', '-0.02*']",0.02*,"['0.03*', '0.01*']"
+White,0.02*,"['0.01*', '0.04*']",-0.04*,"['-0.04*', '0.02*']",-0.01*,"['-0.01*', '-0.01*']"
+Hispanic,-0.0,"['-0.01*', -0.0]",0.04*,"['0.04*', '-0.04*']",-0.01*,"['0.01*', '-0.03*']"
+Age group [18 - 57),-0.04*,-0.02*,0.01*,0.03*,-0.01*,0.01*
+Age group [57 - 74),-0.01*,"['0.02*', '-0.03*']",-0.03*,"['-0.03*', '-0.02*']",-0.0,"['-0.01*', '-0.01*']"
+Age group [74 - 90],0.04*,0.03*,0.02*,0.02*,0.01*,0.01*
+Overall Avg,0.26 (PPV),-,0.8 (Sensitivity),-,0.87 (AUROC),-

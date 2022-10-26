@@ -1,0 +1,10 @@
+Feature_level_inter,Patient_freq_basic,Patient_freq_Del_pos,Patient_freq_Del_neg
+Patient group,Group size total,Delirium group size,No Delirium group size
+Male,1460,662,798
+Female,2352,1125,1227
+Black,971,524,447
+White,2747,1220,1527
+Race Information NA,94,43,51
+Age group [14 - 52),1247,546,701
+Age group [52 - 67),1278,602,676
+Age group [67 - 102],1287,639,648

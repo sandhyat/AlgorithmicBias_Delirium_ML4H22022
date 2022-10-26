@@ -1,0 +1,6 @@
+,gap,gap_psm
+,,
+feature,,
+RACE,0.03,0.04
+Sex,0.02,0.04
+age,0.02,0.02

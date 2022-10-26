@@ -1,0 +1,10 @@
+Feature_level_inter,Patient_freq_basic,Patient_freq_Del_pos,Patient_freq_Del_neg,Patient_freq_psm
+Patient group,Group size total,Delirium group size,No Delirium group size,Psm Group size total
+Male,6631,565,6066,5926
+Female,5309,413,4896,4692
+Black,1319,106,1213,"[1319, 362]"
+White,10256,845,9411,"[1319, 364]"
+Hispanic,365,27,338,"[362, 364]"
+Age group [18 - 57),3978,269,3709,3094
+Age group [57 - 74),3981,296,3685,"[3094, 3340]"
+Age group [74 - 90],3981,413,3568,3340

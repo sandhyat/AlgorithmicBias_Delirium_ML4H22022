@@ -1,0 +1,239 @@
+1) from clinical actions (pqsl commands)
+
+
+**********************************************************  PRESCRIPTIONS ************************************************************
+** For patients with delirium ICD-9 codes **
+
+\copy (SELECT admissions.hadm_id,
+
+          prescriptions.drug, prescriptions.drug_name_generic, prescriptions.drug_name_poe, 
+          
+          prescriptions.startdate
+
+FROM admissions
+  LEFT JOIN diagnoses_icd ON admissions.hadm_id = diagnoses_icd.hadm_id
+  LEFT JOIN prescriptions ON admissions.hadm_id = prescriptions.hadm_id
+
+WHERE diagnoses_icd.icd9_code IN ('2930', '2931', '29281', '29011', '2903', '29041', '2910', '2939', '78009', '29381', '29382', '29383', '29384', '29389', '29012', '29013', '29043', '29211', '29212', '2922', '78002', '2902', '29042', '2908', '2909', '2920', '29282', '3483', '34831', '34839', '34982', '78097') ) to '/output/prescriptions_with.csv' WITH CSV HEADER;
+
+
+** For patients without delirium ICD-9 codes: **
+
+\copy (SELECT admissions.hadm_id,
+
+          prescriptions.drug, prescriptions.drug_name_generic, prescriptions.drug_name_poe, 
+          
+          prescriptions.startdate
+
+FROM admissions
+  LEFT JOIN diagnoses_icd ON admissions.hadm_id = diagnoses_icd.hadm_id
+  LEFT JOIN prescriptions ON admissions.hadm_id = prescriptions.hadm_id
+
+WHERE diagnoses_icd.icd9_code NOT IN ('2930', '2931', '29281', '29011', '2903', '29041', '2910', '2939', '78009', '29381', '29382', '29383', '29384', '29389', '29012', '29013', '29043', '29211', '29212', '2922', '78002', '2902', '29042', '2908', '2909', '2920', '29282', '3483', '34831', '34839', '34982', '78097') ) to '/output/prescriptions_WO.csv' WITH CSV HEADER;
+
+
+
+**********************************************************  PROCEDURES ************************************************************
+
+\copy (SELECT admissions.hadm_id,
+          noteevents.cgid, noteevents.chartdate,
+          noteevents.category, noteevents.description
+
+FROM admissions
+  LEFT JOIN diagnoses_icd ON admissions.hadm_id = diagnoses_icd.hadm_id
+  LEFT JOIN noteevents ON admissions.hadm_id = noteevents.hadm_id
+
+WHERE noteevents.category = 'Radiology'
+AND diagnoses_icd.icd9_code IN ('2930', '2931', '29281', '29011', '2903', 
+    '29041', '2910', '2939', '78009', '29381', '29382', '29383', '29384', 
+    '29389', '29012', '29013', '29043', '29211', '29212', '2922', '78002', 
+    '2902', '29042', '2908', '2909', '2920', '29282', '3483', '34831', 
+    '34839', '34982', '78097')) to '/output/radiology_with.csv' WITH CSV HEADER;
+
+\copy (SELECT admissions.hadm_id,
+          noteevents.cgid, noteevents.chartdate,
+          noteevents.category, noteevents.description
+
+FROM admissions
+  LEFT JOIN diagnoses_icd ON admissions.hadm_id = diagnoses_icd.hadm_id
+  LEFT JOIN noteevents ON admissions.hadm_id = noteevents.hadm_id
+
+WHERE noteevents.category = 'Radiology'
+AND diagnoses_icd.icd9_code NOT IN ('2930', '2931', '29281', '29011', '2903', 
+    '29041', '2910', '2939', '78009', '29381', '29382', '29383', '29384', 
+    '29389', '29012', '29013', '29043', '29211', '29212', '2922', '78002', 
+    '2902', '29042', '2908', '2909', '2920', '29282', '3483', '34831', 
+    '34839', '34982', '78097')) to '/output/radiology_WO.csv' WITH CSV HEADER;
+
+
+\copy (SELECT admissions.hadm_id,
+          noteevents.cgid, noteevents.chartdate,
+          noteevents.category, noteevents.description
+
+FROM admissions
+  LEFT JOIN diagnoses_icd ON admissions.hadm_id = diagnoses_icd.hadm_id
+  LEFT JOIN noteevents ON admissions.hadm_id = noteevents.hadm_id
+
+WHERE noteevents.category = 'ECG'
+AND diagnoses_icd.icd9_code IN ('2930', '2931', '29281', '29011', '2903', 
+    '29041', '2910', '2939', '78009', '29381', '29382', '29383', '29384', 
+    '29389', '29012', '29013', '29043', '29211', '29212', '2922', '78002', 
+    '2902', '29042', '2908', '2909', '2920', '29282', '3483', '34831', 
+    '34839', '34982', '78097')) to '/output/ecg_with.csv' WITH CSV HEADER;
+
+\copy (SELECT admissions.hadm_id,
+          noteevents.cgid, noteevents.chartdate,
+          noteevents.category, noteevents.description
+
+FROM admissions
+  LEFT JOIN diagnoses_icd ON admissions.hadm_id = diagnoses_icd.hadm_id
+  LEFT JOIN noteevents ON admissions.hadm_id = noteevents.hadm_id
+
+WHERE noteevents.category = 'ECG'
+AND diagnoses_icd.icd9_code NOT IN ('2930', '2931', '29281', '29011', '2903', 
+    '29041', '2910', '2939', '78009', '29381', '29382', '29383', '29384', 
+    '29389', '29012', '29013', '29043', '29211', '29212', '2922', '78002', 
+    '2902', '29042', '2908', '2909', '2920', '29282', '3483', '34831', 
+    '34839', '34982', '78097')) to '/output/ecg_WO.csv' WITH CSV HEADER;
+
+**********************************************************  LABS ************************************************************
+
+\copy (SELECT admissions.hadm_id,
+        d_labitems.label, d_labitems.fluid, d_labitems.category,
+        labevents.charttime, labevents.value, labevents.valuenum
+
+FROM admissions
+  LEFT JOIN diagnoses_icd ON admissions.hadm_id = diagnoses_icd.hadm_id
+  LEFT JOIN labevents 
+      INNER JOIN d_labitems ON labevents.itemid = d_labitems.itemid
+  ON admissions.hadm_id = labevents.hadm_id
+
+WHERE diagnoses_icd.icd9_code IN ('2930', '2931', '29281', '29011', '2903', '29041', '2910', '2939', '78009', '29381', '29382', '29383', '29384', '29389', '29012', '29013', '29043', '29211', '29212', '2922', '78002', '2902', '29042', '2908', '2909', '2920', '29282', '3483', '34831', '34839', '34982', '78097')) to '/output/labs_with.csv' WITH CSV HEADER;
+
+\copy (SELECT admissions.hadm_id,
+        d_labitems.label, d_labitems.fluid, d_labitems.category,
+        labevents.charttime, labevents.value, labevents.valuenum
+
+FROM admissions
+  LEFT JOIN diagnoses_icd ON admissions.hadm_id = diagnoses_icd.hadm_id
+  LEFT JOIN labevents 
+      INNER JOIN d_labitems ON labevents.itemid = d_labitems.itemid
+  ON admissions.hadm_id = labevents.hadm_id
+
+WHERE diagnoses_icd.icd9_code NOT IN ('2930', '2931', '29281', '29011', '2903', '29041', '2910', '2939', '78009', '29381', '29382', '29383', '29384', '29389', '29012', '29013', '29043', '29211', '29212', '2922', '78002', '2902', '29042', '2908', '2909', '2920', '29282', '3483', '34831', '34839', '34982', '78097')) to '/output/labs_WO.csv' WITH CSV HEADER;
+
+
+**********************************************************  MICROBIOLOGY ************************************************************
+
+\copy (SELECT admissions.hadm_id,
+        microbiologyevents.chartdate, microbiologyevents.charttime,
+        microbiologyevents.spec_itemid, microbiologyevents.spec_type_desc,
+        microbiologyevents.org_name
+
+FROM admissions
+  LEFT JOIN diagnoses_icd ON admissions.hadm_id = diagnoses_icd.hadm_id
+  LEFT JOIN microbiologyevents 
+      ON admissions.hadm_id = microbiologyevents.hadm_id
+
+WHERE diagnoses_icd.icd9_code IN ('2930', '2931', '29281', '29011', '2903', '29041', '2910', '2939', '78009', '29381', '29382', '29383', '29384', '29389', '29012', '29013', '29043', '29211', '29212', '2922', '78002', '2902', '29042', '2908', '2909', '2920', '29282', '3483', '34831', '34839', '34982', '78097'))  to '/output/microbiology_with.csv' WITH CSV HEADER;
+
+\copy (SELECT admissions.hadm_id,
+        microbiologyevents.chartdate, microbiologyevents.charttime,
+        microbiologyevents.spec_itemid, microbiologyevents.spec_type_desc,
+        microbiologyevents.org_name
+
+FROM admissions
+  LEFT JOIN diagnoses_icd ON admissions.hadm_id = diagnoses_icd.hadm_id
+  LEFT JOIN microbiologyevents 
+      ON admissions.hadm_id = microbiologyevents.hadm_id
+
+WHERE diagnoses_icd.icd9_code NOT IN ('2930', '2931', '29281', '29011', '2903', '29041', '2910', '2939', '78009', '29381', '29382', '29383', '29384', '29389', '29012', '29013', '29043', '29211', '29212', '2922', '78002', '2902', '29042', '2908', '2909', '2920', '29282', '3483', '34831', '34839', '34982', '78097'))  to '/output/microbiology_WO.csv' WITH CSV HEADER;
+
+
+**********************************************************  WORDS ************************************************************
+
+
+\copy (SELECT admissions.hadm_id,
+          noteevents.cgid, noteevents.chartdate,
+          regexp_matches(noteevents.text, 'AMS', 'i'),
+          regexp_matches(noteevents.text, 'mental status', 'i'),
+          regexp_matches(noteevents.text, 'deliri', 'i'),
+          regexp_matches(noteevents.text, 'hallucin', 'i'),
+          regexp_matches(noteevents.text, 'confus', 'i'),
+          regexp_matches(noteevents.text, 'reorient', 'i'),
+          regexp_matches(noteevents.text, 'disorient', 'i'),
+          regexp_matches(noteevents.text, 'encephalopathy', 'i')
+
+FROM admissions
+  LEFT JOIN diagnoses_icd ON admissions.hadm_id = diagnoses_icd.hadm_id
+  LEFT JOIN noteevents ON admissions.hadm_id = noteevents.hadm_id
+
+WHERE diagnoses_icd.icd9_code IN ('2930', '2931', '29281', '29011', '2903', 
+    '29041', '2910', '2939', '78009', '29381', '29382', '29383', '29384', 
+    '29389', '29012', '29013', '29043', '29211', '29212', '2922', '78002', 
+    '2902', '29042', '2908', '2909', '2920', '29282', '3483', '34831', 
+    '34839', '34982', '78097')) to '/output/words_with.csv' WITH CSV HEADER;
+
+\copy (SELECT admissions.hadm_id,
+          noteevents.cgid, noteevents.chartdate,
+          regexp_matches(noteevents.text, 'AMS', 'i'),
+          regexp_matches(noteevents.text, 'mental status', 'i'),
+          regexp_matches(noteevents.text, 'deliri', 'i'),
+          regexp_matches(noteevents.text, 'hallucin', 'i'),
+          regexp_matches(noteevents.text, 'confus', 'i'),
+          regexp_matches(noteevents.text, 'reorient', 'i'),
+          regexp_matches(noteevents.text, 'disorient', 'i'),
+          regexp_matches(noteevents.text, 'encephalopathy', 'i')
+
+FROM admissions
+  LEFT JOIN diagnoses_icd ON admissions.hadm_id = diagnoses_icd.hadm_id
+  LEFT JOIN noteevents ON admissions.hadm_id = noteevents.hadm_id
+
+WHERE diagnoses_icd.icd9_code NOT IN ('2930', '2931', '29281', '29011', '2903', 
+    '29041', '2910', '2939', '78009', '29381', '29382', '29383', '29384', 
+    '29389', '29012', '29013', '29043', '29211', '29212', '2922', '78002', 
+    '2902', '29042', '2908', '2909', '2920', '29282', '3483', '34831', 
+    '34839', '34982', '78097')) to '/output/words_WO.csv' WITH CSV HEADER;
+
+
+**********************************************************  DEMOGRAPHICS ************************************************************
+
+\copy (SELECT admissions.hadm_id, 
+            admissions.admittime, admissions.dischtime, admissions.deathtime,
+            admissions.admission_type, admissions.admission_location, admissions.discharge_location,
+            admissions.insurance, admissions.language, admissions.religion, admissions.marital_status,
+            admissions.ethnicity, admissions.hospital_expire_flag,
+
+            diagnoses_icd.icd9_code,
+
+            d_icd_diagnoses.short_title,
+            
+            patients.subject_id, patients.gender, patients.dob, patients.dod,
+
+            icustays.los,
+            
+            drgcodes.drg_type, drgcodes.drg_code, drgcodes.description, 
+            drgcodes.drg_severity, drgcodes.drg_mortality
+
+FROM admissions
+  LEFT JOIN diagnoses_icd ON admissions.hadm_id = diagnoses_icd.hadm_id
+  LEFT JOIN d_icd_diagnoses ON diagnoses_icd.icd9_code = d_icd_diagnoses.icd9_code
+
+  LEFT JOIN patients ON admissions.subject_id = patients.subject_id
+  
+  LEFT JOIN icustays ON admissions.hadm_id = icustays.hadm_id
+  
+  LEFT JOIN drgcodes ON admissions.hadm_id = drgcodes.hadm_id) to '/output/dems.csv' WITH CSV HEADER;
+
+
+**********************************************************  OUTCOMES ************************************************************
+
+
+\copy (SELECT diagnoses_icd.hadm_id
+FROM diagnoses_icd
+WHERE diagnoses_icd.icd9_code IN ('2930', '2931', '29281', '29011', '2903', '29041', '2910', '2939', '78009', '29381', '29382', '29383', '29384', '29389', '29012', '29013', '29043', '29211', '29212', '2922', '78002', '2902', '29042', '2908', '2909', '2920', '29282', '3483', '34831', '34839', '34982', '78097')) to '/output/positive_del.csv' WITH CSV HEADER;
+
+\copy (SELECT diagnoses_icd.hadm_id
+FROM diagnoses_icd
+WHERE diagnoses_icd.icd9_code NOT IN ('2930', '2931', '29281', '29011', '2903', '29041', '2910', '2939', '78009', '29381', '29382', '29383', '29384', '29389', '29012', '29013', '29043', '29211', '29212', '2922', '78002', '2902', '29042', '2908', '2909', '2920', '29282', '3483', '34831', '34839', '34982', '78097')) to '/output/negative_del.csv' WITH CSV HEADER;
+
