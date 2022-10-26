@@ -3,7 +3,7 @@ Code for ML4H'22 submission
 
 This repository contains the code used in the project investigating algorithmic bias in delirium predicting machine learning models.
 
-We used two datasets: EHR_Prop (Epic era data from a academic US hospital; not available publicly) and MIMIC-III.
+We used two datasets: ACTFAST Dataset (Epic era data from Barnes Jewish Hopital in St Louis; not available publicly) and MIMIC-III.
 
 For the MIMIC III dataset, the extraction steps were followed from the supplementary information available in the [paper on labelling delirum](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7941123/).
 
